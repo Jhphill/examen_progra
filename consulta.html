@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CancerData - Consulta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <style>
+    body {
+      background: url('https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+    .header-top {
+      background-color: #004d99;
+      color: white;
+      padding: 10px 0;
+      font-size: 0.9rem;
+    }
+    .header-top a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .header-top a:hover {
+      text-decoration: underline;
+    }
+    .header-main {
+      background-color: rgba(26, 26, 26, 0.8);
+      color: #ccc;
+      padding: 10px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-main .navbar-brand {
+      color: #ff4d4d;
+      font-size: 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      position: relative;
+      z-index: 1;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .nav-tabs .nav-link {
+      color: #ff4d4d;
+      background-color: transparent;
+      border: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0 15px;
+      padding: 10px 20px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .nav-tabs .nav-link.active {
+      color: #fff;
+      border-bottom: 2px solid #ff4d4d;
+    }
+    .nav-tabs .nav-link:hover {
+      color: #fff;
+      border-bottom: 2px solid #ff4d4d;
+    }
+    .ecg-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      opacity: 0.3;
+      z-index: 0;
+    }
+    .ecg-line {
+      position: absolute;
+      width: 200%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0,20 H40 V10 H60 V30 H80 V15 H100 V25 H120 V10 H140 V30 H160 V20 H200" stroke="red" stroke-width="2" fill="none"/></svg>') repeat-x;
+      animation: moveEcg 2s linear infinite;
+    }
+    .heart {
+      position: absolute;
+      top: 50%;
+      left: 100px;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle at 60% 65%, red 65%, transparent 70%), radial-gradient(circle at 40% 65%, red 65%, transparent 70%);
+      border-radius: 50% 50% 0 0;
+      transform: translateY(-50%) rotate(45deg);
+    }
+    .heart::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: red;
+      border-radius: 50% 50% 0 0;
+      transform: rotate(-90deg);
+      top: -50%;
+    }
+    @keyframes moveEcg {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .content {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 15px;
+      margin: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .content h2 {
+      font-weight: 600;
+      color: #dc3545;
+      margin-bottom: 1.5rem;
+    }
+    .content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #333;
+    }
+    .content .form-control {
+      margin-bottom: 1rem;
+    }
+    #consultaResult {
+      margin-top: 1rem;
+      display: none;
+    }
+    .alert {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Header -->
+  <div class="header-top text-center">
+    <p>SIN FINANCIACIÓN EN INVESTIGACIÓN SE PIERDEN VIDAS. Ayúdanos a seguir salvando vidas. <a href="#donate" class="text-warning">Dona ahora</a>.</p>
+  </div>
+
+  <nav class="header-main navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">CANCER DATA</a>
+      <div class="ecg-container">
+        <div class="ecg-line"></div>
+        <div class="heart"></div>
+      </div>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Gráficos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="informacion.html">Información</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="consulta.html">Consulta</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="content">
+    <h2>🔍 Consulta de Datos</h2>
+    <p>Aquí puedes realizar consultas personalizadas sobre los datos de cáncer. Utiliza los filtros para explorar información específica y visualízala en los gráficos.</p>
+    <form id="consultaForm">
+      <div class="mb-3">
+        <label for="country" class="form-label">País</label>
+        <input type="text" class="form-control" id="country" placeholder="Ej: España">
+      </div>
+      <div class="mb-3">
+        <label for="year" class="form-label">Año</label>
+        <input type="number" class="form-control" id="year" placeholder="Ej: 2020" min="2000" max="2025">
+      </div>
+      <div class="mb-3">
+        <label for="cancerType" class="form-label">Tipo de Cáncer</label>
+        <input type="text" class="form-control" id="cancerType" placeholder="Ej: Pulmón">
+      </div>
+      <button type="submit" class="btn btn-primary">Consultar</button>
+    </form>
+    <div id="consultaResult" class="alert alert-info"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#consultaForm').on('submit', function(e) {
+        e.preventDefault();
+
+        // Obtener valores del formulario
+        const country = $('#country').val().trim();
+        const year = $('#year').val().trim();
+        const cancerType = $('#cancerType').val().trim();
+
+        // Validar que al menos un campo esté lleno
+        if (!country && !year && !cancerType) {
+          $('#consultaResult').text('Por favor, ingresa al menos un criterio de búsqueda.').show();
+          return;
+        }
+
+        // Construir la URL con parámetros de consulta
+        let url = 'index.html';
+        const params = [];
+        if (country) params.push('country=' + encodeURIComponent(country));
+        if (year) params.push('year=' + encodeURIComponent(year));
+        if (cancerType) params.push('cancerType=' + encodeURIComponent(cancerType));
+        if (params.length > 0) {
+          url += '?' + params.join('&');
+        }
+
+        // Redirigir a index.html con los filtros aplicados
+        window.location.href = url;
+      });
+    });
+  </script>
+</body>
+
+</html>

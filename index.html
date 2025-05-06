@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CancerData - Gráficos</title>
+  <link rel="icon" type="image/png" href="https://img.icons8.com/color/48/000000/cancer-ribbon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- Top Header -->
+  <div class="header-top">
+    <p>SIN FINANCIACIÓN EN INVESTIGACIÓN SE PIERDEN VIDAS. Ayúdanos a seguir salvando vidas. <a href="#donate" class="text-warning">Dona ahora</a>.</p>
+  </div>
+
+  <!-- Main Header -->
+  <nav class="header-main navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">CANCER DATA</a>
+      <div class="ecg-container">
+        <div class="ecg-line"></div>
+        <div class="heart"></div>
+      </div>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Gráficos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="informacion.html">Información</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="consulta.html">Consulta</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="content">
+    <details class="mb-4">
+      <summary class="h5 text-primary">🎛️ Filtros de Visualización</summary>
+      <div class="row mb-4 g-3">
+        <div class="col-md-3 col-sm-6">
+          <label for="filterPais" class="form-label fw-bold">País:</label>
+          <select id="filterPais" class="form-select">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <label for="filterAnio" class="form-label fw-bold">Año:</label>
+          <select id="filterAnio" class="form-select">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <label for="filterCategoria" class="form-label fw-bold">Tipo de Cáncer:</label>
+          <select id="filterCategoria" class="form-select">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div class="col-md-3 col-sm-6 d-flex align-items-end">
+          <button id="resetFilters" class="btn btn-secondary w-100">Restablecer Filtros</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="mb-4">
+      <summary class="h5 text-primary">📊 Ver Tabla de Datos</summary>
+      <div class="mt-3 table-responsive">
+        <table id="tablaDatos" class="table table-striped" style="width:100%">
+          <thead>
+            <tr>
+              <th>ID del Paciente</th>
+              <th>Edad</th>
+              <th>Género</th>
+              <th>Región</th>
+              <th>Año</th>
+              <th>Riesgo Genético</th>
+              <th>Contaminación del Aire</th>
+              <th>Consumo de Alcohol</th>
+              <th>Tabaquismo</th>
+              <th>Nivel de Obesidad</th>
+              <th>Tipo de Cáncer</th>
+              <th>Etapa del Cáncer</th>
+              <th>Costo del Tratamiento (USD)</th>
+              <th>Años de Supervivencia</th>
+              <th>Puntuación de Severidad Objetivo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="tableError" class="error-message"></div>
+      </div>
+    </details>
+
+    <ul class="nav nav-tabs mb-3" id="graficoTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab">Distribución General</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab">Tendencias Temporales</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab">Factores de Riesgo</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab">Costos y Severidad</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="graficoTabsContent">
+      <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+        <div class="row g-4">
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Casos por País (Barra)</h5>
+              <canvas id="casosPorPais"></canvas>
+              <div id="chartError1" class="error-message"></div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Distribución por Tipo de Cáncer (Doughnut)</h5>
+              <canvas id="tipoCancerDoughnut"></canvas>
+              <div id="chartError2" class="error-message"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="tab2" role="tabpanel">
+        <div class="row g-4">
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Casos por Año (Línea)</h5>
+              <canvas id="casosPorAnio"></canvas>
+              <div id="chartError3" class="error-message"></div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Supervivencia Promedio por Año (Línea)</h5>
+              <canvas id="supervivenciaPorAnio"></canvas>
+              <div id="chartError4" class="error-message"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="tab3" role="tabpanel">
+        <div class="row g-4">
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Impacto del Tabaquismo (Barra)</h5>
+              <canvas id="impactoTabaquismo"></canvas>
+              <div id="chartError5" class="error-message"></div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Distribución por Nivel de Obesidad (Pie)</h5>
+              <canvas id="nivelObesidadPie"></canvas>
+              <div id="chartError6" class="error-message"></div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Consumo de Alcohol por Género (Barra)</h5>
+              <canvas id="alcoholPorGenero"></canvas>
+              <div id="chartError7" class="error-message"></div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Contaminación del Aire por Región (Barra)</h5>
+              <canvas id="contaminacionPorRegion"></canvas>
+              <div id="chartError8" class="error-message"></div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Factores de Riesgo por Región (Radar)</h5>
+              <canvas id="factoresRiesgoRadar"></canvas>
+              <div id="chartError9" class="error-message"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="tab4" role="tabpanel">
+        <div class="row g-4">
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Costo del Tratamiento por Tipo de Cáncer (Barra)</h5>
+              <canvas id="costoPorTipoCancer"></canvas>
+              <div id="chartError10" class="error-message"></div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="chart-box">
+              <h5>Severidad por Etapa (Barra)</h5>
+              <canvas id="severidadPorEtapa"></canvas>
+              <div id="chartError11" class="error-message"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <script src="index.js"></script>
+  <script>
+    window.addEventListener('error', function(e) {
+      console.error('Error global:', e.message, e.filename, e.lineno);
+      if (e.filename.includes('index.js')) {
+        document.getElementById('tableError').textContent = 'Error al cargar la tabla: ' + e.message;
+      }
+    });
+
+    ['casosPorPais', 'tipoCancerDoughnut', 'casosPorAnio', 'supervivenciaPorAnio', 
+     'impactoTabaquismo', 'nivelObesidadPie', 'alcoholPorGenero', 'contaminacionPorRegion', 
+     'costoPorTipoCancer', 'severidadPorEtapa', 'factoresRiesgoRadar'].forEach((id, index) => {
+      try {
+        if (!document.getElementById(id)) {
+          document.getElementById(`chartError${index + 1}`).textContent = `Canvas con ID ${id} no encontrado.`;
+        }
+      } catch (e) {
+        document.getElementById(`chartError${index + 1}`).textContent = `Error al verificar canvas ${id}: ${e.message}`;
+      }
+    });
+  </script>
+</body>
+</html>

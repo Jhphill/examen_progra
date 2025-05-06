@@ -1,0 +1,244 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    /* Letra más pequeña */
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1,
+  h2 {
+    font-weight: 600;
+  }
+
+  .card,
+  .chart-box {
+    border-radius: 1rem;
+    background-color: #f8f9fa;
+    /* fondo claro para cajitas */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .card:hover,
+  .chart-box:hover {
+    transform: translateY(-3px);
+  }
+
+  .nav-tabs .nav-link {
+    border-radius: 0.5rem 0.5rem 0 0;
+    font-weight: 500;
+  }
+
+  .form-select,
+  .table {
+    border-radius: 0.5rem;
+  }
+
+  #modoTemaBtn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    z-index: 1000;
+  }
+
+  table.dataTable {
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .dataTables_wrapper .dataTables_filter input {
+    border-radius: 0.5rem;
+  }
+
+  .row.g-4>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  details summary {
+    font-weight: bold;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+
+  details[open] summary {
+    background-color: #e9ecef;
+  }
+
+  details {
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+
+  #graficoRadar, #graficoDoughnut, #ventasPorFecha,#ventasPorPais, #ventasPorCategoria {
+    max-width: 100%;
+    height: 450px !important; /* Ajusta el alto según lo que necesites */
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    background: url('https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 12px;
+        background-attachment: scroll; /* Evitar problemas de rendimiento en móviles */
+    }
+}
+
+.header-top {
+    background-color: #004d99;
+    color: white;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.header-main {
+    background-color: rgba(26, 26, 26, 0.8);
+    padding: 0.5rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem !important;
+}
+
+.content {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 576px) {
+    .content {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+
+.chart-box {
+  padding: 1.5rem;
+  max-height: 350px; /* Altura máxima controlada */
+  overflow-y: auto; /* Desplazamiento vertical si hay muchas etiquetas */
+}
+
+.chart-box canvas {
+  width: 100% !important; /* Asegurar que el canvas ocupe todo el ancho disponible */
+  height: auto !important; /* Permitir que la altura se ajuste al contenido */
+}
+
+@media (max-width: 768px) {
+  .chart-box {
+      max-height: 250px; /* Reducir altura en pantallas pequeñas */
+  }
+}
+
+.chart-box h5 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.header-main {
+  background-color: rgba(26, 26, 26, 0.8);
+  color: #ccc;
+  padding: 10px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-main .navbar-brand {
+  color: #ff4d4d;
+  font-size: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.nav-tabs .nav-link {
+  color: #ff4d4d;
+  background-color: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 15px;
+  padding: 10px 20px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff;
+  border-bottom: 2px solid #ff4d4d;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #fff;
+  border-bottom: 2px solid #ff4d4d;
+}
+
+.ecg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.ecg-line {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0,20 H40 V10 H60 V30 H80 V15 H100 V25 H120 V10 H140 V30 H160 V20 H200" stroke="red" stroke-width="2" fill="none"/></svg>') repeat-x;
+  animation: moveEcg 2s linear infinite;
+}
+
+.heart {
+  position: absolute;
+  top: 50%;
+  left: 100px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at 60% 65%, red 65%, transparent 70%), radial-gradient(circle at 40% 65%, red 65%, transparent 70%);
+  border-radius: 50% 50% 0 0;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.heart::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: red;
+  border-radius: 50% 50% 0 0;
+  transform: rotate(-90deg);
+  top: -50%;
+}
+
+@keyframes moveEcg {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
